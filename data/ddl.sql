@@ -14,7 +14,7 @@ CREATE TABLE "user" (
 DROP TABLE IF EXISTS "review";
 CREATE TABLE "review" (
                         review_id SERIAL PRIMARY KEY,
-                        item_id INT,
+                        item_id VARCHAR(20),
                         purchase_id VARCHAR(20),
                         user_rating INT,
                         user_id VARCHAR(20),

@@ -39,25 +39,32 @@ def insert_data(data):
         review = {
             "user_id": r["user_id"],
             "user_rating": int(r["user_rating"]),
-            "age_group": r["user_attr"]["age_group"] if "age_group" in r["user_attr"] else None,
+            "age_group": int(r["user_attr"]["age_group"]) if "age_group" in r["user_attr"] else None,
             "gender": get_gender(r["user_attr"]["gender"]) if "gender" in r["user_attr"] else None,
             "skin_type": r["user_attr"]["skin_type"] if "skin_type" in r["user_attr"] else None,
             "skin_info": r["user_attr"]["skin_info"] if "skin_info" in r["user_attr"] else None,
             "skin_tone": None,
             "review": r["review"],
+            "reordered": False,
+            "is_sample": False,
             "item_id": item["item_id"]
         }
         post(API_HOST + "/review", review)
 
         user = {
             "user_id": r["user_id"],
-            "age_group": r["user_attr"]["age_group"] if "age_group" in r["user_attr"] else None,
+            "password": "kurly2022",
+            "age_group": int(r["user_attr"]["age_group"]) if "age_group" in r["user_attr"] else None,
             "gender": get_gender(r["user_attr"]["gender"]) if "gender" in r["user_attr"] else None,
             "skin_type": r["user_attr"]["skin_type"] if "skin_type" in r["user_attr"] else None,
             "skin_info": r["user_attr"]["skin_info"] if "skin_info" in r["user_attr"] else None,
             "skin_tone": None
         }
-        post(API_HOST + "/register", user)
+        try:
+            post(API_HOST + "/user", user)
+        except Exception as e:
+            print(r["user_id"])
+            print(e)
 
         review_cnt += 1
         if review_limit <= review_cnt:

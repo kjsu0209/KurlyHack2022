@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.beans.BeanUtils;
+
 import com.chunyan.chunyan.controller.UserController;
 
 import lombok.AllArgsConstructor;
@@ -26,18 +28,13 @@ public class User {
 	private String password;
 	private String gender;
 	private String skin_type;
-	private int age_group;
+	private Integer age_group;
 	private String skin_info;
 	private String skin_tone;
 
 	public static User fromUserDto(UserController.UserDto userDto) {
-		return User.builder().user_id(userDto.getUser_id())
-			.password(userDto.getPassword())
-			.age_group(userDto.getAge_group())
-			.gender(userDto.getGender())
-			.skin_info(userDto.getSkin_info())
-			.skin_tone(userDto.getSkin_tone())
-			.skin_type(userDto.getSkin_type())
-			.build();
+		User user = new User();
+		BeanUtils.copyProperties(userDto, user);
+		return user;
 	}
 }

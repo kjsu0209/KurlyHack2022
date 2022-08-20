@@ -36,7 +36,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user")
-	public Response<String> register(UserDto userDto) throws DuplicateException {
+	public Response<String> register(@RequestBody UserDto userDto) throws DuplicateException {
 		User user = User.fromUserDto(userDto);
 		userService.regist(user);
 
@@ -67,7 +67,7 @@ public class UserController {
 		private String password;
 		private String gender;
 		private String skin_type;
-		private int age_group;
+		private Integer age_group;
 		private String skin_info;
 		private String skin_tone;
 	}
