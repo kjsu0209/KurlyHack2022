@@ -1,10 +1,12 @@
 package com.chunyan.chunyan.service;
 
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.chunyan.chunyan.common.exception.DuplicateException;
+import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.dao.User;
 import com.chunyan.chunyan.repository.UserRepository;
 
@@ -18,11 +20,53 @@ public class UserService {
 
 	UserRepository userRepository;
 
-	public boolean validate(String user_id, String password) {
-		log.error("long : " + userRepository.count());
+	public boolean validate(String user_id, String password)  throws NotFoundException{
+		User user = getUser(user_id);
+
+		return user.getPassword().equals(password);
+	}
+
+	public void regist(User user) throws DuplicateException {
+		if (userRepository.existsById(user.getUser_id())) {
+			throw new DuplicateException("Duplicated user id");
+		}
+
+		userRepository.save(user);
+	}
+
+	public void update(User newUser)  throws NotFoundException{
+		User user = getUser(newUser.getUser_id());
+		if (!newUser.getPassword().equals(user.getPassword())) {
+			user.setPassword(newUser.getPassword());
+		}
+		if (!newUser.getGender().equals(user.getGender())) {
+			user.setGender(newUser.getGender());
+		}
+		if (!newUser.getSkin_info().equals(user.getSkin_info())) {
+			user.setSkin_info(newUser.getSkin_info());
+		}
+		if (!newUser.getSkin_tone().equals(user.getSkin_tone())) {
+			user.setPassword(newUser.getPassword());
+		}
+		if (!newUser.getSkin_info().equals(user.getSkin_info())) {
+			user.setSkin_info(newUser.getSkin_info());
+		}
+		if (user.getAge_group() != newUser.getAge_group()) {
+			user.setAge_group(newUser.getAge_group());
+		}
+
+		userRepository.save(user);
+	}
+
+	public User getUser(String user_id)  throws NotFoundException{
 		Optional<User> user = userRepository.findById(user_id);
 
-		return !user.isPresent() || user.get().getPassword().equals(password);
+		if (!user.isPresent()) {
+			throw new NotFoundException("User not found");
+		}
+
+		return user.get();
 	}
+
 
 }

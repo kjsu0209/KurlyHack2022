@@ -1,30 +1,28 @@
 package com.chunyan.chunyan.common.advice;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.chunyan.chunyan.common.exception.DuplicateException;
+import com.chunyan.chunyan.common.exception.NotFoundException;
+import com.chunyan.chunyan.common.response.Response;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-	@AllArgsConstructor
-	@Getter
-	private static class ErrorResponse {
-		private int statusCode;
-		private String message;
+	@ExceptionHandler(NotFoundException.class)
+	public Response<String> exception(NotFoundException e) {
+		HttpStatus status =  HttpStatus.NOT_FOUND;
+		return new Response<>(status.value(), e.getMessage());
 	}
 
-	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ResponseEntity<ErrorResponse> notSupported(HttpRequestMethodNotSupportedException e) {
-		HttpStatus status =  HttpStatus.METHOD_NOT_ALLOWED;
-		ErrorResponse response = new ErrorResponse(status.value(), "method not allowed");
-		return new ResponseEntity<>(response, status);
+	@ExceptionHandler(DuplicateException.class)
+	public Response<String> exception(DuplicateException e) {
+		HttpStatus status =  HttpStatus.BAD_REQUEST;
+		return new Response<>(status.value(), e.getMessage());
 	}
 }
