@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.common.response.Response;
 import com.chunyan.chunyan.dao.Item;
 import com.chunyan.chunyan.service.ItemService;
@@ -41,7 +42,7 @@ public class ItemController {
 	}
 
 	@GetMapping("/{item_id}")
-	public Response<ItemDto> findItemById(@PathVariable(name="item_id") String item_id) {
+	public Response<ItemDto> findItemById(@PathVariable(name="item_id") String item_id) throws NotFoundException {
 		Item item = itemService.getItemById(item_id);
 		ItemDto itemDto = new ItemDto();
 		BeanUtils.copyProperties(item, itemDto);
