@@ -17,7 +17,7 @@ options = Options()
 options.headless = True
 
 CTG_URL = 'https://www.amoremall.com/kr/ko/display/rank?category={CTG_ID}&categoryType=CATEGORY'
-CTG_LIST = ['CTG007', 'CTG008']
+CTG_LIST = ['CTG001', 'CTG002', 'CTG003', 'CTG004', 'CTG005', 'CTG006', 'CTG007', 'CTG008']
 IMG_URL = 'https://images-kr.amoremall.com/products/{id}/{id}_01.png?1659942889742&1659942889743&resize=550:550&shrink=550:550'
 
 

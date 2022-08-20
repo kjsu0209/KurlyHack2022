@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### python
+/venv/
+geckodriver.log
+/data/amore_reviews/
