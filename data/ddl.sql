@@ -31,7 +31,7 @@ CREATE TABLE "review" (
 
 DROP TABLE IF EXISTS "item";
 CREATE TABLE "item" (
-                      item_id SERIAL PRIMARY KEY,
+                      item_id VARCHAR(20) PRIMARY KEY,
                       category_id VARCHAR(10),
                       item_img VARCHAR(80),
                       brand_name VARCHAR(30),
@@ -64,3 +64,12 @@ CREATE TABLE "purchase" (
                           delivery_fee INT,
                           payment_amount INT
 );
+
+INSERT INTO "category" VALUES ('CTG001', '스킨케어');
+INSERT INTO "category" VALUES ('CTG002', '메이크업');
+INSERT INTO "category" VALUES ('CTG003', '네일&향수');
+INSERT INTO "category" VALUES ('CTG004', '생활용품');
+INSERT INTO "category" VALUES ('CTG005', '소품&도구');
+INSERT INTO "category" VALUES ('CTG006', '뷰티푸드');
+INSERT INTO "category" VALUES ('CTG007', '남성');
+INSERT INTO "category" VALUES ('CTG008', '베이비');
