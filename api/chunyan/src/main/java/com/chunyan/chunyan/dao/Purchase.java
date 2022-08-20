@@ -2,22 +2,17 @@ package com.chunyan.chunyan.dao;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.springframework.beans.BeanUtils;
 
 import com.chunyan.chunyan.controller.BagController;
-import com.chunyan.chunyan.controller.ReviewController;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,24 +26,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="bag", schema = "kurly_schema")
-public class Bag {
+@Table(name="purchase", schema = "kurly_schema")
+public class Purchase {
 	@Id
-	@Generated(GenerationTime.INSERT)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int bag_id;
-
-	private String user_id;
-	private boolean is_sample;
-	private String status;
-	private int count;
-	private LocalDateTime dt;
-	private String item_id;
 	private String purchase_id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "item_id", insertable = false, updatable = false)
-	private Item item;
+	private String user_id;
+	private LocalDateTime purchase_dt;
+	private int delivery_fee;
+	private int payment_amount;
+
+	@OneToMany
+	@JoinColumn(name = "purchase_id")
+	private List<Bag> bag;
 
 	public static Bag fromBagDto(BagController.BagDto bagDto) {
 		Bag bag = new Bag();

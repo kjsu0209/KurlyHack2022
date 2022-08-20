@@ -1,5 +1,7 @@
 package com.chunyan.chunyan.service;
 
+import java.util.List;
+
 import com.chunyan.chunyan.dao.Bag;
 
 public interface BagService {
@@ -8,5 +10,5 @@ public interface BagService {
 
 	void updateBag(Bag bag);
 
-	void getBagById(String user_id);
+	List<Bag> getBagById(String user_id);
 }

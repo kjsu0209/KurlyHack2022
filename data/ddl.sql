@@ -50,6 +50,8 @@ DROP TABLE IF EXISTS "bag";
 CREATE TABLE "bag" (
                      bag_id SERIAL PRIMARY KEY,
                      user_id VARCHAR(20),
+                     item_id VARCHAR(20),
+                     purchase_id VARCHAR(20),
                      is_sample BOOLEAN,
                      status VARCHAR(20),
                      count INT,
@@ -58,7 +60,7 @@ CREATE TABLE "bag" (
 
 DROP TABLE IF EXISTS "purchase";
 CREATE TABLE "purchase" (
-                          purchase_id SERIAL PRIMARY KEY,
+                          purchase_id VARCHAR(20) PRIMARY KEY,
                           user_id VARCHAR(20),
                           purchase_dt DATE DEFAULT now(),
                           delivery_fee INT,
