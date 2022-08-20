@@ -1,6 +1,7 @@
 package com.chunyan.chunyan.dao;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -33,13 +34,13 @@ public class Item {
 
 	private String item_name;
 	private String item_img;
-	private String brand_id;
+	private String brand_name;
 	private String category_id;
 	private int price;
 	private boolean has_sample;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_id", insertable = false, updatable = false)
 	private Category category;
 
 	public static Item fromItemDto(ItemController.ItemDto itemDto) {

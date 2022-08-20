@@ -33,9 +33,9 @@ DROP TABLE IF EXISTS "item";
 CREATE TABLE "item" (
                       item_id VARCHAR(20) PRIMARY KEY,
                       category_id VARCHAR(10),
-                      item_img VARCHAR(80),
-                      brand_name VARCHAR(30),
-                      item_name VARCHAR(100),
+                      item_img VARCHAR(200),
+                      brand_name VARCHAR(50),
+                      item_name VARCHAR(200),
                       price INT,
                       has_sample BOOLEAN
 );

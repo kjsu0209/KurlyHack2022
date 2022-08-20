@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chunyan.chunyan.common.response.Response;
@@ -20,7 +22,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/item")
 @RestController
 @AllArgsConstructor
@@ -29,7 +33,7 @@ public class ItemController {
 	private ItemService itemService;
 
 	@PostMapping
-	public Response<String> addItem(ItemDto itemDto) {
+	public Response<String> addItem(@RequestBody ItemDto itemDto) {
 		Item item = Item.fromItemDto(itemDto);
 		itemService.addItem(item);
 
@@ -67,7 +71,7 @@ public class ItemController {
 		private String item_id;
 		private String item_name;
 		private String item_img;
-		private String brand_id;
+		private String brand_name;
 		private String category_id;
 		private String category_name;
 		private int price;
