@@ -1,34 +1,36 @@
-DROP TABLE IF EXISTS "USER";
-CREATE TABLE "USER" (
-                      USER_ID VARCHAR(20) PRIMARY KEY,
-                      PASSWORD VARCHAR(20),
-                      GENDER VARCHAR(1),
-                      SKIN_TYPE VARCHAR(50),
-                      AGE_GROUP INT,
-                      SKIN_INFO VARCHAR(50),
-                      SKIN_TONE VARCHAR(50)
+set schema 'kurly_schema';
+
+DROP TABLE IF EXISTS "user";
+CREATE TABLE "user" (
+                      user_id VARCHAR(20) PRIMARY KEY,
+                      password VARCHAR(20),
+                      gender VARCHAR(1),
+                      skin_type VARCHAR(50),
+                      age_group INT,
+                      skin_info VARCHAR(50),
+                      skin_tone VARCHAR(50)
 );
 
-DROP TABLE IF EXISTS "REVIEW";
-CREATE TABLE "REVIEW" (
-                        REVIEW_ID SERIAL PRIMARY KEY,
-                        ITEM_ID INT,
-                        PURCHASE_ID VARCHAR(20),
-                        USER_RATING INT,
-                        USER_ID VARCHAR(20),
-                        GENDER VARCHAR(1),
-                        SKIN_TYPE VARCHAR(50),
-                        AGE_GROUP INT,
-                        SKIN_INFO VARCHAR(50),
-                        SKIN_TONE VARCHAR(50),
+DROP TABLE IF EXISTS "review";
+CREATE TABLE "review" (
+                        review_id SERIAL PRIMARY KEY,
+                        item_id INT,
+                        purchase_id VARCHAR(20),
+                        user_rating INT,
+                        user_id VARCHAR(20),
+                        gender VARCHAR(1),
+                        skin_type VARCHAR(50),
+                        age_group INT,
+                        skin_info VARCHAR(50),
+                        skin_tone VARCHAR(50),
                         review TEXT,
                         is_sample BOOLEAN,
                         reordered BOOLEAN,
                         dt TIMESTAMP DEFAULT now()
 );
 
-DROP TABLE IF EXISTS "ITEM";
-CREATE TABLE "ITEM" (
+DROP TABLE IF EXISTS "item";
+CREATE TABLE "item" (
                       item_id SERIAL PRIMARY KEY,
                       category_id VARCHAR(10),
                       item_img VARCHAR(80),
@@ -38,14 +40,14 @@ CREATE TABLE "ITEM" (
                       has_sample BOOLEAN
 );
 
-DROP TABLE IF EXISTS "CATEGORY";
-CREATE TABLE "CATEGORY" (
+DROP TABLE IF EXISTS "category";
+CREATE TABLE "category" (
                           category_id VARCHAR(10) PRIMARY KEY,
                           category_name VARCHAR(20)
 );
 
-DROP TABLE IF EXISTS "BAG";
-CREATE TABLE "BAG" (
+DROP TABLE IF EXISTS "bag";
+CREATE TABLE "bag" (
                      bag_id SERIAL PRIMARY KEY,
                      user_id VARCHAR(20),
                      is_sample BOOLEAN,
@@ -54,8 +56,8 @@ CREATE TABLE "BAG" (
                      dt DATE DEFAULT now()
 );
 
-DROP TABLE IF EXISTS "PURCHASE";
-CREATE TABLE "PURCHASE" (
+DROP TABLE IF EXISTS "purchase";
+CREATE TABLE "purchase" (
                           purchase_id SERIAL PRIMARY KEY,
                           user_id VARCHAR(20),
                           purchase_dt DATE DEFAULT now(),

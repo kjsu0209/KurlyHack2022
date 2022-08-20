@@ -37,3 +37,7 @@ build/
 /venv/
 geckodriver.log
 /data/amore_reviews/
+
+.DS_Store
+
+**/application.properties
