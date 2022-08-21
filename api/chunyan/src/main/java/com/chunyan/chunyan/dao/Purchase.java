@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import org.springframework.beans.BeanUtils;
 
 import com.chunyan.chunyan.controller.BagController;
+import com.chunyan.chunyan.controller.PurchaseController;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,10 +41,10 @@ public class Purchase {
 	@JoinColumn(name = "purchase_id")
 	private List<Bag> bag;
 
-	public static Bag fromBagDto(BagController.BagDto bagDto) {
-		Bag bag = new Bag();
-		BeanUtils.copyProperties(bagDto, bag);
-		bag.setDt(LocalDateTime.parse(bagDto.getDt(), DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
-		return bag;
+	public static Purchase fromPurchaseDto(PurchaseController.PurchaseDto PurchaseDto) {
+		Purchase purchase = new Purchase();
+		BeanUtils.copyProperties(PurchaseDto, purchase);
+		purchase.setPurchase_dt(LocalDateTime.parse(PurchaseDto.getPurchase_dt(), DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
+		return purchase;
 	}
 }

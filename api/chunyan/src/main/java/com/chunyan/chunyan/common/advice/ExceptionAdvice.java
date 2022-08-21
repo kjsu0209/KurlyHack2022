@@ -3,6 +3,7 @@ package com.chunyan.chunyan.common.advice;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.MethodNotAllowedException;
 
 import com.chunyan.chunyan.common.exception.DuplicateException;
 import com.chunyan.chunyan.common.exception.NotFoundException;
@@ -25,4 +26,11 @@ public class ExceptionAdvice {
 		HttpStatus status =  HttpStatus.BAD_REQUEST;
 		return new Response<>(status.value(), e.getMessage());
 	}
+
+	@ExceptionHandler(MethodNotAllowedException.class)
+	public Response<String> exception(MethodNotAllowedException e) {
+		HttpStatus status =  HttpStatus.BAD_REQUEST;
+		return new Response<>(status.value(), "Bad Request");
+	}
+
 }

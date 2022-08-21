@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.common.response.Response;
 import com.chunyan.chunyan.dao.Bag;
+import com.chunyan.chunyan.dao.enums.BagStatus;
 import com.chunyan.chunyan.service.BagService;
 
 import lombok.AllArgsConstructor;
@@ -41,14 +43,13 @@ public class BagController {
 	}
 
 	@PutMapping
-	public Response<String> updateBag(@RequestBody BagDto bagDto) {
-		Bag bag = Bag.fromBagDto(bagDto);
-		bagService.updateBag(bag);
+	public Response<String> updateBag(@RequestBody BagDto bagDto) throws NotFoundException {
+		bagService.updateBag(bagDto);
 
 		return new Response<>(HttpStatus.OK.value(), "Bag updated");
 	}
 
-	@GetMapping("/bag/{user_id}")
+	@GetMapping("/{user_id}")
 	public Response<List<Bag>> getBagByUserId(@PathVariable String user_id) {
 		List<Bag> bags = bagService.getBagById(user_id);
 
@@ -62,9 +63,12 @@ public class BagController {
 	public static class BagDto {
 		private Integer bag_id;
 		private String user_id;
-		private boolean is_sample;
-		private String status;
+		private Boolean is_sample;
+		private BagStatus status;
+		private String item_id;
 		private int count;
+		private String purchase_id;
 		private String dt;
+		private Boolean reordered;
 	}
 }

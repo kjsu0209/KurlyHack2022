@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.common.response.Response;
 import com.chunyan.chunyan.dao.Purchase;
 import com.chunyan.chunyan.service.PurchaseService;
@@ -29,8 +30,11 @@ public class PurchaseController {
 	PurchaseService purchaseService;
 
 	@PostMapping
-	public Response<String> addPurchase(@RequestBody PurchaseDto purchaseDto) {
-		return new Response<>(HttpStatus.CREATED.value(), "purchase created");
+	public Response<Purchase> addPurchase(@RequestBody PurchaseDto purchaseDto) throws NotFoundException {
+		Purchase purchase = Purchase.fromPurchaseDto(purchaseDto);
+		String purchaseId = purchaseService.addPurchase(purchase);
+		purchase.setPurchase_id(purchaseId);
+		return new Response<>(HttpStatus.CREATED.value(), purchase);
 	}
 
 	@GetMapping("/{user_id}")

@@ -11,7 +11,7 @@ import com.chunyan.chunyan.dao.Item;
 import com.chunyan.chunyan.dao.Review;
 
 @Repository
-public interface BagRepository extends CrudRepository<Bag, String> {
+public interface BagRepository extends CrudRepository<Bag, Integer> {
 	@Query("SELECT b FROM Bag b WHERE b.user_id = :user_id AND b.status = 'STORED'")
 	List<Bag> findAllByUserId(String user_id);
 }
