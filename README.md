@@ -5,7 +5,7 @@
 #### before build
 
 - maven 설치 ([가이드(https://charliecharlie.tistory.com/308)])
-
+- java 8
 
 #### build & run
 ```
