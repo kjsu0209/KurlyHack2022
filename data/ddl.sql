@@ -62,7 +62,7 @@ DROP TABLE IF EXISTS "purchase";
 CREATE TABLE "purchase" (
                           purchase_id VARCHAR(20) PRIMARY KEY,
                           user_id VARCHAR(20),
-                          purchase_dt DATE DEFAULT now(),
+                          purchase_dt TIMESTAMP DEFAULT now(),
                           delivery_fee INT,
                           payment_amount INT
 );

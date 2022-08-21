@@ -69,6 +69,5 @@ public class BagController {
 		private int count;
 		private String purchase_id;
 		private String dt;
-		private Boolean reordered;
 	}
 }

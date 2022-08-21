@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.common.response.Response;
+import com.chunyan.chunyan.dao.Bag;
 import com.chunyan.chunyan.dao.Purchase;
 import com.chunyan.chunyan.service.PurchaseService;
 
@@ -21,7 +22,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @RequestMapping("/purchase")
@@ -30,17 +33,15 @@ public class PurchaseController {
 	PurchaseService purchaseService;
 
 	@PostMapping
-	public Response<Purchase> addPurchase(@RequestBody PurchaseDto purchaseDto) throws NotFoundException {
+	public Response<String> addPurchase(@RequestBody PurchaseDto purchaseDto) throws NotFoundException {
 		Purchase purchase = Purchase.fromPurchaseDto(purchaseDto);
 		String purchaseId = purchaseService.addPurchase(purchase);
-		purchase.setPurchase_id(purchaseId);
-		return new Response<>(HttpStatus.CREATED.value(), purchase);
+		return new Response<>(HttpStatus.CREATED.value(), purchaseId);
 	}
 
 	@GetMapping("/{user_id}")
 	public Response<List<Purchase>> getPurchaseList(@PathVariable String user_id, @RequestParam String start, @RequestParam String end) {
 		List<Purchase> purchaseList = purchaseService.findAllByRange(user_id, start, end);
-
 		return new Response<>(HttpStatus.OK.value(), purchaseList);
 	}
 

@@ -32,6 +32,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public String addPurchase(Purchase purchase) throws NotFoundException {
 		User user = userService.getUser(purchase.getUser_id());
 		List<Bag> bag = bagService.getBagById(purchase.getUser_id());
+		if (bag.isEmpty()) {
+			throw new NotFoundException("no items in bag");
+		}
 
 		purchase.setPurchase_id(generatePurcahseId());
 		purchase.setBag(bag);
@@ -49,8 +52,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
 	@Override
 	public List<Purchase> findAllByRange(String user_id, String sDate, String eDate) {
-		purchaseRepository.findAllByRange(user_id, sDate, eDate);
-		return null;
+		return purchaseRepository.findAllByRange(user_id, sDate, eDate);
 	}
 
 	private String generatePurcahseId() {

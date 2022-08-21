@@ -50,7 +50,6 @@ public class Bag {
 	private LocalDateTime dt;
 	private String item_id;
 	private String purchase_id;
-	private Boolean reordered;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_id", insertable = false, updatable = false)

@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.BeanUtils;
 
 import com.chunyan.chunyan.controller.BagController;
@@ -33,6 +34,7 @@ public class Purchase {
 	private String purchase_id;
 
 	private String user_id;
+	@CreationTimestamp
 	private LocalDateTime purchase_dt;
 	private int delivery_fee;
 	private int payment_amount;
@@ -41,10 +43,11 @@ public class Purchase {
 	@JoinColumn(name = "purchase_id")
 	private List<Bag> bag;
 
-	public static Purchase fromPurchaseDto(PurchaseController.PurchaseDto PurchaseDto) {
+	public static Purchase fromPurchaseDto(PurchaseController.PurchaseDto purchaseDto) {
 		Purchase purchase = new Purchase();
-		BeanUtils.copyProperties(PurchaseDto, purchase);
-		purchase.setPurchase_dt(LocalDateTime.parse(PurchaseDto.getPurchase_dt(), DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
+		BeanUtils.copyProperties(purchaseDto, purchase);
+		if (purchaseDto.getPurchase_dt() != null)
+			purchase.setPurchase_dt(LocalDateTime.parse(purchaseDto.getPurchase_dt(), DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
 		return purchase;
 	}
 }
