@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chunyan.chunyan.common.exception.DuplicateException;
 import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.common.response.Response;
 import com.chunyan.chunyan.dao.Bag;
@@ -35,7 +36,7 @@ public class BagController {
 	BagService bagService;
 
 	@PostMapping
-	public Response<String> addBag(@RequestBody BagDto bagDto) {
+	public Response<String> addBag(@RequestBody BagDto bagDto) throws DuplicateException, NotFoundException {
 		Bag bag = Bag.fromBagDto(bagDto);
 		bagService.addBag(bag);
 

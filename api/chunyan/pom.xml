@@ -11,8 +11,9 @@
 	<groupId>com.chunyan</groupId>
 	<artifactId>chunyan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>chunyan</name>
-	<description>chunyang-i</description>
+	<description>chunyang-e</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

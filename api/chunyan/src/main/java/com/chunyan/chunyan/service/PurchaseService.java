@@ -8,5 +8,5 @@ import com.chunyan.chunyan.dao.Purchase;
 public interface PurchaseService {
 	String addPurchase(Purchase purchase) throws NotFoundException;
 
-	List<Purchase> findAllByRange(String user_id, String sDate, String eDate);
+	List<Purchase> findAllByRange(String user_id, String sDate, String eDate, Boolean sample);
 }

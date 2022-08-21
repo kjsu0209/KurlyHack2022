@@ -40,8 +40,9 @@ public class PurchaseController {
 	}
 
 	@GetMapping("/{user_id}")
-	public Response<List<Purchase>> getPurchaseList(@PathVariable String user_id, @RequestParam String start, @RequestParam String end) {
-		List<Purchase> purchaseList = purchaseService.findAllByRange(user_id, start, end);
+	public Response<List<Purchase>> getPurchaseList(@PathVariable String user_id, @RequestParam String start,
+		@RequestParam String end, @RequestParam(required = false) Boolean sample) {
+		List<Purchase> purchaseList = purchaseService.findAllByRange(user_id, start, end, sample);
 		return new Response<>(HttpStatus.OK.value(), purchaseList);
 	}
 

@@ -2,12 +2,16 @@ package com.chunyan.chunyan.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.chunyan.chunyan.common.exception.DuplicateException;
 import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.controller.BagController;
 import com.chunyan.chunyan.dao.Bag;
+import com.chunyan.chunyan.dao.Item;
 import com.chunyan.chunyan.repository.BagRepository;
 
 import lombok.AllArgsConstructor;
@@ -19,13 +23,16 @@ import lombok.extern.slf4j.Slf4j;
 public class BagServiceImpl implements BagService {
 
 	BagRepository bagRepository;
-
+	ItemService itemService;
 
 	@Override
-	public void addBag(Bag bag) {
-		// TODO: 존재하는 item_id인지 검사
-
-		// TODO: 중복된 item_id와 user_id 조합 있는지 검사
+	@Transactional
+	public void addBag(Bag bag) throws NotFoundException, DuplicateException {
+		Item item = itemService.getItemById(bag.getItem_id());
+		List<Bag> bags = getBagById(bag.getUser_id());
+		if (bags.stream().anyMatch(b -> b.getItem_id().equals(bag.getItem_id()))) {
+			throw new DuplicateException("duplicated! please use update api");
+		}
 
 		bagRepository.save(bag);
 	}

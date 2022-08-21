@@ -2,10 +2,12 @@ package com.chunyan.chunyan.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.dao.Bag;
@@ -51,8 +53,16 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
-	public List<Purchase> findAllByRange(String user_id, String sDate, String eDate) {
-		return purchaseRepository.findAllByRange(user_id, sDate, eDate);
+	public List<Purchase> findAllByRange(String user_id, String sDate, String eDate, Boolean sample) {
+		if (!ObjectUtils.isEmpty(sample)) {
+			return purchaseRepository.findAllByRange(user_id, sDate, eDate).stream()
+				.peek(p -> p.setBag(p.getBag().stream()
+					.filter(b -> b.getIs_sample() == sample)
+					.collect(Collectors.toList())))
+				.filter(p -> !p.getBag().isEmpty()).collect(Collectors.toList());
+		} else {
+			return purchaseRepository.findAllByRange(user_id, sDate, eDate);
+		}
 	}
 
 	private String generatePurcahseId() {

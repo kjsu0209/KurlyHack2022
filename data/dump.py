@@ -31,7 +31,7 @@ def insert_data(data):
         "price": int(''.join(data["price"].split(','))),
         "has_sample": True
     }
-    # post(API_HOST + "/item", item)
+    post(API_HOST + "/item", item)
 
     review_limit = 100
     review_cnt = 1
