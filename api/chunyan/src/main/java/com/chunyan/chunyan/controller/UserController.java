@@ -48,7 +48,7 @@ public class UserController {
 	}
 
 	@PutMapping("/user")
-	public Response<String> updateUser(UserDto userDto) throws NotFoundException {
+	public Response<String> updateUser(@RequestBody UserDto userDto) throws NotFoundException {
 		User user = User.fromUserDto(userDto);
 		userService.update(user);
 
