@@ -31,7 +31,7 @@ public class UserController {
 
 	@PostMapping
 	@RequestMapping("/login")
-	public Response<String> login(LoginDto loginDto)  throws NotFoundException {
+	public Response<String> login(@RequestBody LoginDto loginDto)  throws NotFoundException {
 		if (!userService.validate(loginDto.user_id, loginDto.password)) {
 			throw new NotFoundException("Invalid login info");
 		}
