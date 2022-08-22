@@ -1,6 +1,5 @@
 package com.chunyan.chunyan.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ import com.chunyan.chunyan.common.exception.DuplicateException;
 import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.common.response.Response;
 import com.chunyan.chunyan.dao.Bag;
-import com.chunyan.chunyan.dao.enums.BagStatus;
+import com.chunyan.chunyan.common.enums.BagStatus;
 import com.chunyan.chunyan.service.BagService;
 
 import lombok.AllArgsConstructor;

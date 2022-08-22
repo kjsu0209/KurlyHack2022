@@ -13,7 +13,7 @@ import com.chunyan.chunyan.common.exception.NotFoundException;
 import com.chunyan.chunyan.dao.Bag;
 import com.chunyan.chunyan.dao.Purchase;
 import com.chunyan.chunyan.dao.User;
-import com.chunyan.chunyan.dao.enums.BagStatus;
+import com.chunyan.chunyan.common.enums.BagStatus;
 import com.chunyan.chunyan.repository.PurchaseRepository;
 
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package com.chunyan.chunyan.common.converver;
 
 import org.springframework.core.convert.converter.Converter;
 
-import com.chunyan.chunyan.dao.enums.BagStatus;
+import com.chunyan.chunyan.common.enums.BagStatus;
 
 public class StringToBagStatusConverter implements Converter<String, BagStatus> {
 	@Override

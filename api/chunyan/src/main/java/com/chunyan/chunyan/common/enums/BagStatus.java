@@ -1,4 +1,4 @@
-package com.chunyan.chunyan.dao.enums;
+package com.chunyan.chunyan.common.enums;
 
 public enum BagStatus {
 

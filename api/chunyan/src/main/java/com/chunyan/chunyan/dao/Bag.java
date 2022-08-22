@@ -20,8 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 
 import com.chunyan.chunyan.controller.BagController;
-import com.chunyan.chunyan.controller.ReviewController;
-import com.chunyan.chunyan.dao.enums.BagStatus;
+import com.chunyan.chunyan.common.enums.BagStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
