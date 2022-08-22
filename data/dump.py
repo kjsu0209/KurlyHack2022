@@ -76,7 +76,7 @@ def main():
 
     for file_name in file_list:
         file_location = './amore_reviews/' + file_name
-        with open(file_location, 'r') as fp:
+        with open(file_location, 'r', encoding='utf-8') as fp:
             data = json.load(fp)
             for d in data["data"]:
                 insert_data(d)
