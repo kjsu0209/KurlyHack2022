@@ -17,6 +17,7 @@ import com.chunyan.chunyan.common.response.Response;
 import com.chunyan.chunyan.dao.Bag;
 import com.chunyan.chunyan.dao.Purchase;
 import com.chunyan.chunyan.service.PurchaseService;
+import com.chunyan.chunyan.vo.PurchaseVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,9 +41,11 @@ public class PurchaseController {
 	}
 
 	@GetMapping("/{user_id}")
-	public Response<List<Purchase>> getPurchaseList(@PathVariable String user_id, @RequestParam String start,
-		@RequestParam String end, @RequestParam(required = false) Boolean sample) {
-		List<Purchase> purchaseList = purchaseService.findAllByRange(user_id, start, end, sample);
+	public Response<List<PurchaseVO>> getPurchaseList(@PathVariable String user_id, @RequestParam String start,
+		@RequestParam String end, @RequestParam(required = false) Boolean sample,
+		@RequestParam(required = false) Boolean review) {
+		log.error("hi");
+		List<PurchaseVO> purchaseList = purchaseService.findAllByRange(user_id, start, end, sample, review);
 		return new Response<>(HttpStatus.OK.value(), purchaseList);
 	}
 

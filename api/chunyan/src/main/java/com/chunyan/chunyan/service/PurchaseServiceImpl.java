@@ -15,6 +15,7 @@ import com.chunyan.chunyan.dao.Purchase;
 import com.chunyan.chunyan.dao.User;
 import com.chunyan.chunyan.common.enums.BagStatus;
 import com.chunyan.chunyan.repository.PurchaseRepository;
+import com.chunyan.chunyan.vo.PurchaseVO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
 	UserService userService;
 	BagService bagService;
+	ReviewService reviewService;
 
 	@Override
 	@Transactional
@@ -53,16 +55,32 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
-	public List<Purchase> findAllByRange(String user_id, String sDate, String eDate, Boolean sample) {
+	@Transactional
+	public List<PurchaseVO> findAllByRange(String user_id, String sDate, String eDate, Boolean sample, Boolean review) {
+		List<Purchase> resultRaw = purchaseRepository.findAllByRange(user_id, sDate, eDate);
+		List<PurchaseVO> result = resultRaw.stream().map(PurchaseVO::fromEntity).collect(Collectors.toList());
 		if (!ObjectUtils.isEmpty(sample)) {
-			return purchaseRepository.findAllByRange(user_id, sDate, eDate).stream()
+			result = result.stream()
 				.peek(p -> p.setBag(p.getBag().stream()
 					.filter(b -> b.getIs_sample() == sample)
 					.collect(Collectors.toList())))
 				.filter(p -> !p.getBag().isEmpty()).collect(Collectors.toList());
-		} else {
-			return purchaseRepository.findAllByRange(user_id, sDate, eDate);
 		}
+
+		if (!ObjectUtils.isEmpty(review)) {
+			result = result.stream()
+				.peek(p -> p.setBag(p.getBag().stream()
+					.filter(b -> checkHasReviewed(b.getItem_id(), b.getUser_id()) == review)
+					.collect(Collectors.toList())))
+				.filter(p -> !p.getBag().isEmpty()).collect(Collectors.toList());
+		}
+
+		return result.stream().filter(p -> !p.getBag().isEmpty()).collect(Collectors.toList());
+	}
+
+	private boolean checkHasReviewed(String itemId, String userId) {
+		log.error("result = " + reviewService.getReviewByItemIdAndUserId(itemId, userId).size());
+		return !ObjectUtils.isEmpty(reviewService.getReviewByItemIdAndUserId(itemId, userId));
 	}
 
 	private String generatePurcahseId() {

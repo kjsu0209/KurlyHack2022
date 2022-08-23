@@ -66,7 +66,9 @@ public class Bag {
 		}
 
 
-		bag.setDt(LocalDateTime.parse(bagDto.getDt(), DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
+		if (!ObjectUtils.isEmpty(bagDto.getDt())) {
+			bag.setDt(LocalDateTime.parse(bagDto.getDt(), DateTimeFormatter.ofPattern("yyyyMMddHHmm")));
+		}
 		return bag;
 	}
 }

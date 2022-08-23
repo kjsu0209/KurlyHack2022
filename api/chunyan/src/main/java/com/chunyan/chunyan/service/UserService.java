@@ -47,7 +47,7 @@ public class UserService {
 			user.setSkin_info(newUser.getSkin_info());
 		}
 		if (!ObjectUtils.isEmpty(newUser.getSkin_tone()) && !newUser.getSkin_tone().equals(user.getSkin_tone())) {
-			user.setPassword(newUser.getPassword());
+			user.setSkin_tone(newUser.getSkin_tone());
 		}
 		if (!ObjectUtils.isEmpty(newUser.getSkin_info()) && !newUser.getSkin_info().equals(user.getSkin_info())) {
 			user.setSkin_info(newUser.getSkin_info());

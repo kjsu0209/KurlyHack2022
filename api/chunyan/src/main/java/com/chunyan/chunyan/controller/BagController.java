@@ -1,5 +1,7 @@
 package com.chunyan.chunyan.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,8 @@ public class BagController {
 	@PostMapping
 	public Response<String> addBag(@RequestBody BagDto bagDto) throws DuplicateException, NotFoundException {
 		Bag bag = Bag.fromBagDto(bagDto);
+		bag.setStatus(BagStatus.STORED);
+		bag.setDt(LocalDateTime.now());
 		bagService.addBag(bag);
 
 		return new Response<>(HttpStatus.CREATED.value(), "Bag created");

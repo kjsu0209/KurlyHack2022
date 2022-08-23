@@ -26,6 +26,11 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
+	public List<Review> getReviewByItemIdAndUserId(String item_id, String user_id) {
+		return reviewRepository.findAllByItemIdAndUserId(item_id, user_id);
+	}
+
+	@Override
 	public void addReview(Review review) {
 		reviewRepository.save(review);
 	}
