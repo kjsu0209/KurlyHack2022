@@ -13,4 +13,6 @@ public interface ItemService {
 
 	Item getItemById(String item_id) throws NotFoundException;
 
+	List<Item> getItemRankByReview();
+
 }

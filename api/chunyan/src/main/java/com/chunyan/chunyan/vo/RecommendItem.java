@@ -1,5 +1,10 @@
 package com.chunyan.chunyan.vo;
 
+import org.springframework.beans.BeanUtils;
+
+import com.chunyan.chunyan.dao.Item;
+import com.chunyan.chunyan.dao.Purchase;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,4 +24,11 @@ public class RecommendItem {
 	private int price;
 	private boolean has_sample;
 	private Stats stats;
+
+	public static RecommendItem fromEntity(Item entity) {
+		if (entity == null) return null;
+		RecommendItem item = new RecommendItem();
+		BeanUtils.copyProperties(entity, item);
+		return item;
+	}
 }

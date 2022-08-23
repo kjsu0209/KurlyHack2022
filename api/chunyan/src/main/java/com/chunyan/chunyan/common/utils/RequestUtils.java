@@ -3,6 +3,7 @@ package com.chunyan.chunyan.common.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,6 +20,21 @@ public class RequestUtils {
 		HttpURLConnection conn;
 		try {
 			conn = connection(requestURL, HttpMethod.GET);
+			return getJSONResponse(readResponse(conn));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static JSONObject postJSON(String requestURL, JSONObject requestBody) {
+		HttpURLConnection conn;
+		try {
+			conn = connection(requestURL, HttpMethod.POST);
+			conn.setDoOutput(true);
+			OutputStream os = conn.getOutputStream();
+			byte[] input = requestBody.toJSONString().getBytes(StandardCharsets.UTF_8);
+			os.write(input, 0, input.length);
 			return getJSONResponse(readResponse(conn));
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
@@ -45,7 +61,7 @@ public class RequestUtils {
 		while (br.ready()) {
 			sb.append(br.readLine());
 		}
-		return br.toString();
+		return sb.toString();
 	}
 
 	public static JSONObject getJSONResponse(String response) throws ParseException {

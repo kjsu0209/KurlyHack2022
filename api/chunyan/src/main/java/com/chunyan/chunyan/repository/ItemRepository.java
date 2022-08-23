@@ -13,4 +13,7 @@ public interface ItemRepository extends CrudRepository<Item, String> {
 
 	@Query(value = "SELECT i FROM Item i WHERE i.category_id = :category_id")
 	List<Item> findAllByCategory(String category_id);
+
+	@Query(value = "SELECT i.item_id as cnt FROM Item i JOIN Review r ON i.item_id = r.item_id GROUP BY i.item_id ORDER BY cnt")
+	List<String> rankItemByReview();
 }
