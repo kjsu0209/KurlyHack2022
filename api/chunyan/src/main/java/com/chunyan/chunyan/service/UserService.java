@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.chunyan.chunyan.common.exception.DuplicateException;
 import com.chunyan.chunyan.common.exception.NotFoundException;
@@ -36,19 +37,19 @@ public class UserService {
 
 	public void update(User newUser)  throws NotFoundException{
 		User user = getUser(newUser.getUser_id());
-		if (!newUser.getPassword().equals(user.getPassword())) {
+		if (!ObjectUtils.isEmpty(newUser.getPassword()) && !newUser.getPassword().equals(user.getPassword())) {
 			user.setPassword(newUser.getPassword());
 		}
-		if (!newUser.getGender().equals(user.getGender())) {
+		if (!ObjectUtils.isEmpty(newUser.getGender()) && !newUser.getGender().equals(user.getGender())) {
 			user.setGender(newUser.getGender());
 		}
-		if (!newUser.getSkin_info().equals(user.getSkin_info())) {
+		if (!ObjectUtils.isEmpty(newUser.getSkin_info()) && !newUser.getSkin_info().equals(user.getSkin_info())) {
 			user.setSkin_info(newUser.getSkin_info());
 		}
-		if (!newUser.getSkin_tone().equals(user.getSkin_tone())) {
+		if (!ObjectUtils.isEmpty(newUser.getSkin_tone()) && !newUser.getSkin_tone().equals(user.getSkin_tone())) {
 			user.setPassword(newUser.getPassword());
 		}
-		if (!newUser.getSkin_info().equals(user.getSkin_info())) {
+		if (!ObjectUtils.isEmpty(newUser.getSkin_info()) && !newUser.getSkin_info().equals(user.getSkin_info())) {
 			user.setSkin_info(newUser.getSkin_info());
 		}
 		if (user.getAge_group() != newUser.getAge_group()) {

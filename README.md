@@ -9,16 +9,8 @@
 
 #### build & run
 ```
-## chunyan 디렉터리로 이동 
-cd /../chunyan
-
-./mvnw clean package //linux
-
-#### windows
-mvnw.cmd clean install
-mvnw.cmd package
-
+## sh 디렉터리로 이동 
+cd /../sh
 ## build & run
-./mvnw spring-boot:run // linux
-mvn spring-boot:run //windows
+sudo sh run2.sh
 ```
