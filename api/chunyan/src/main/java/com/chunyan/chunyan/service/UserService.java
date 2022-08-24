@@ -8,6 +8,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.chunyan.chunyan.common.exception.DuplicateException;
 import com.chunyan.chunyan.common.exception.NotFoundException;
+import com.chunyan.chunyan.controller.UserController;
 import com.chunyan.chunyan.dao.User;
 import com.chunyan.chunyan.repository.UserRepository;
 
@@ -35,7 +36,7 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public void update(User newUser)  throws NotFoundException{
+	public void update(UserController.UserDto newUser)  throws NotFoundException{
 		User user = getUser(newUser.getUser_id());
 		if (!ObjectUtils.isEmpty(newUser.getPassword()) && !newUser.getPassword().equals(user.getPassword())) {
 			user.setPassword(newUser.getPassword());
@@ -45,6 +46,9 @@ public class UserService {
 		}
 		if (!ObjectUtils.isEmpty(newUser.getSkin_info()) && !newUser.getSkin_info().equals(user.getSkin_info())) {
 			user.setSkin_info(newUser.getSkin_info());
+		}
+		if (!ObjectUtils.isEmpty(newUser.getSkin_type()) && !newUser.getSkin_info().equals(user.getSkin_type())) {
+			user.setSkin_type(newUser.getSkin_type());
 		}
 		if (!ObjectUtils.isEmpty(newUser.getSkin_tone()) && !newUser.getSkin_tone().equals(user.getSkin_tone())) {
 			user.setSkin_tone(newUser.getSkin_tone());
