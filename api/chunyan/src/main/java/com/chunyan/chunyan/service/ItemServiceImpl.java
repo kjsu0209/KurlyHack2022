@@ -11,6 +11,7 @@ import com.chunyan.chunyan.dao.Item;
 import com.chunyan.chunyan.repository.ItemRepository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Item getItemById(String item_id) throws NotFoundException {
-		if (itemRepository.existsById(item_id)) {
+		if (!ObjectUtils.isEmpty(item_id) && itemRepository.existsById(item_id)) {
 			return itemRepository.findById(item_id).get();
 		} else {
 			throw new NotFoundException("Item not exists");
