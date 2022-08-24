@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -94,20 +95,24 @@ public class RecommendServiceImpl implements RecommendService{
 			result = getRecommendItemByUser(user_id, ITEM_CNT);
 		}
 
-		return result;
+		if (result.isEmpty() || result.size() < ITEM_CNT) {
+			result.addAll(getRecommendItemByUser(user_id, ITEM_CNT)); // 사용자 이력 기반 추천
+		}
+
+		return result.stream().limit(ITEM_CNT).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<RecommendItem> getRecommendItemByUser(String user_id, int limit) {
 		// 1차: 리뷰 평점 4점 이상인 상품 (최신순 -> 데이터셋에 날짜 부재로 조건 넣지 않음)
-		List<RecommendItem> result = reviewService.getReviewByUserId(user_id).stream().map(ReviewVO::fromEntity).filter(r -> r.getUser_rating() >= 4).map(r -> {
+		List<RecommendItem> result = reviewService.getReviewByUserId(user_id).stream().map(ReviewVO::fromEntity).filter(r -> r.getUser_rating() >= 4)
+			.map(r -> {
 			try {
 				return itemService.getItemById(r.getItem_id());
 			} catch (NotFoundException e) {
-				e.printStackTrace();
+				return null;
 			}
-			return null;
-		}).map(RecommendItem::fromEntity).collect(Collectors.toList());
+		}).filter(Objects::nonNull).map(RecommendItem::fromEntity).collect(Collectors.toList());
 
 		// 3차: 전체 리뷰 상위 limit개
 		if (result.size() < limit) {
@@ -116,7 +121,7 @@ public class RecommendServiceImpl implements RecommendService{
 
 		remainRandItems(result, limit);
 
-		return result.stream().limit(limit).collect(Collectors.toList());
+		return result.stream().distinct().filter(Objects::nonNull).limit(limit).collect(Collectors.toList());
 	}
 
 	public List<Item> getML(String user_id, int limit) throws NotFoundException, JsonProcessingException {
